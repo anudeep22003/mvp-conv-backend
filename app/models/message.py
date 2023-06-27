@@ -1,8 +1,7 @@
 from sqlalchemy import Column, String, Text, Integer, DateTime
 
-# from ..db.base_class import Base, IMPORT_PATH
-# from ..db.session import SQL_DATABASE_URL
-from .base_class import Base
+from app.models.base_class import Base
+from app.models.model_helpers import utcnow
 
 
 class Message(Base):
@@ -11,7 +10,9 @@ class Message(Base):
     sender = Column(String, nullable=False)  # human
     receiver = Column(String, nullable=False)  # agent
     sources = Column(String)
-    ts_created = Column(DateTime)
+    ts_created = Column(
+        DateTime(timezone=True), server_default=utcnow(), nullable=False
+    )
 
 
 if __name__ == "__main__":
